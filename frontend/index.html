@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetDiagnosys - AI Veterinary Assistant</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        vet: {
+                            dark: '#064e3b',   /* Emerald 900 */
+                            primary: '#10b981', /* Emerald 500 */
+                            accent: '#f59e0b',  /* Amber 500 */
+                            light: '#f0fdf4',   /* Emerald 50 */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <nav class="bg-vet-dark text-white fixed w-full z-50 shadow-lg transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-stethoscope text-3xl text-vet-primary"></i>
+                    <span class="font-bold text-2xl tracking-wide">Vet<span class="text-vet-primary">Diagnosys</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-vet-primary transition">Beranda</a>
+                    <a href="#ai-tool" class="hover:text-vet-primary transition">AI Diagnosis</a>
+                    <a href="#services" class="hover:text-vet-primary transition">Layanan</a>
+                    <a href="#contact" class="hover:text-vet-primary transition">Kontak</a>
+                </div>
+                <a href="#ai-tool" class="hidden md:block bg-vet-accent hover:bg-yellow-600 text-white px-5 py-2 rounded-full font-semibold transition shadow-md">
+                    Mulai Konsultasi
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-vet-dark overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col-reverse lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2 text-center lg:text-left">
+                <span class="text-vet-primary font-bold tracking-wider uppercase mb-2 block">Teknologi Kesehatan Hewan</span>
+                <h1 class="text-4xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+                    Solusi Kesehatan Cerdas untuk <span class="text-vet-primary">Hewan Kesayangan</span>
+                </h1>
+                <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+                    Dapatkan analisa awal kesehatan hewan peliharaan Anda menggunakan teknologi AI berbasis jurnal medis veteriner terpercaya. Cepat, Akurat, dan Mudah.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#ai-tool" class="bg-vet-primary hover:bg-emerald-600 text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+                        <i class="fa-solid fa-microchip mr-2"></i> Coba AI Sekarang
+                    </a>
+                    <a href="#services" class="border-2 border-white text-white hover:bg-white hover:text-vet-dark px-8 py-4 rounded-lg font-bold text-lg transition">
+                        Pelajari Layanan
+                    </a>
+                </div>
+            </div>
+            <div class="lg:w-1/2">
+                <img src="https://images.unsplash.com/photo-1599443015574-be5fe8a05783?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                     alt="Dokter Hewan" 
+                     class="rounded-3xl shadow-2xl border-4 border-vet-primary/30 rotate-2 hover:rotate-0 transition duration-500">
+            </div>
+        </div>
+    </section>
+
+    <section id="ai-tool" class="py-20 bg-vet-light">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-vet-dark mb-4">AI Symptom Checker 🐾</h2>
+                <p class="text-gray-600">Ceritakan gejala yang dialami hewan Anda, AI kami akan mencocokkannya dengan database medis.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden relative">
+                <div class="p-8">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Anamnesa / Deskripsi Gejala</label>
+                    <textarea id="symptomsInput" rows="4" 
+                        class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-vet-primary focus:border-vet-primary transition resize-none text-gray-700 text-lg" 
+                        placeholder="Contoh: Kucing saya muntah cairan kuning, tidak mau makan 2 hari, dan terlihat sangat lemas..."></textarea>
+                    
+                    <div class="mt-6">
+                        <button onclick="analyzeSymptoms()" id="btnAnalyze"
+                            class="w-full bg-vet-dark hover:bg-emerald-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-3 text-lg group">
+                            <span id="btnText">Analisa Kasus</span>
+                            <i id="btnIcon" class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                            
+                            <svg id="loadingIcon" class="hidden animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="resultArea" class="hidden bg-emerald-50 border-t border-emerald-100 p-8 animate-fade-in">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="bg-white p-2 rounded-full shadow-sm text-vet-primary">
+                            <i class="fa-solid fa-robot text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-vet-dark">Hasil Analisa Medis</h3>
+                    </div>
+                    
+                    <div id="resultText" class="prose prose-emerald max-w-none text-gray-700">
+                        </div>
+
+                    <div class="mt-8 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r text-sm text-yellow-800 flex gap-3">
+                        <i class="fa-solid fa-triangle-exclamation mt-1"></i>
+                        <p class="m-0"><strong>Disclaimer:</strong> Hasil ini dihasilkan oleh kecerdasan buatan. Ini bukan pengganti diagnosa profesional. Segera bawa hewan ke dokter jika kondisi darurat.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-vet-primary font-bold tracking-wider uppercase">Layanan Kami</span>
+                <h2 class="text-3xl lg:text-4xl font-bold text-vet-dark mt-2">Perawatan Komprehensif</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-8 rounded-2xl hover:shadow-xl transition duration-300 border border-transparent hover:border-vet-primary group">
+                    <div class="w-14 h-14 bg-vet-primary/10 rounded-xl flex items-center justify-center text-vet-primary text-2xl mb-6 group-hover:bg-vet-primary group-hover:text-white transition">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-vet-dark mb-3">Konsultasi Umum</h3>
+                    <p class="text-gray-500">Pemeriksaan kesehatan rutin dan vaksinasi untuk menjaga imunitas hewan kesayangan Anda.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-2xl hover:shadow-xl transition duration-300 border border-transparent hover:border-vet-primary group">
+                    <div class="w-14 h-14 bg-vet-primary/10 rounded-xl flex items-center justify-center text-vet-primary text-2xl mb-6 group-hover:bg-vet-primary group-hover:text-white transition">
+                        <i class="fa-solid fa-syringe"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-vet-dark mb-3">Bedah & Rawat Inap</h3>
+                    <p class="text-gray-500">Fasilitas bedah steril dan ruang rawat inap yang nyaman dengan pengawasan 24 jam.</p>
+                </div>
+
+                <div class="bg-gray-50 p-8 rounded-2xl hover:shadow-xl transition duration-300 border border-transparent hover:border-vet-primary group">
+                    <div class="w-14 h-14 bg-vet-primary/10 rounded-xl flex items-center justify-center text-vet-primary text-2xl mb-6 group-hover:bg-vet-primary group-hover:text-white transition">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-vet-dark mb-3">Laboratorium & AI</h3>
+                    <p class="text-gray-500">Diagnosa cepat didukung teknologi AI dan peralatan laboratorium darah lengkap.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-vet-dark text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-stethoscope text-2xl text-vet-primary"></i>
+                        <span class="font-bold text-xl">VetDiagnosys</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Membantu pemilik hewan memahami kesehatan peliharaan mereka dengan teknologi masa depan.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-vet-primary">Hubungi Kami</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><i class="fa-solid fa-phone mr-2"></i> (021) 555-0123</li>
+                        <li><i class="fa-solid fa-envelope mr-2"></i> hello@vetdiagnosys.com</li>
+                        <li><i class="fa-solid fa-location-dot mr-2"></i> Jakarta Selatan, Indonesia</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-vet-primary">Tautan Cepat</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition">Tentang Kami</a></li>
+                        <li><a href="#" class="hover:text-white transition">Tim Dokter</a></li>
+                        <li><a href="#" class="hover:text-white transition">Artikel Medis</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-vet-primary">Jam Operasional</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex justify-between"><span>Senin - Jumat</span> <span>08:00 - 20:00</span></li>
+                        <li class="flex justify-between"><span>Sabtu</span> <span>09:00 - 17:00</span></li>
+                        <li class="flex justify-between"><span>Minggu</span> <span>Tutup</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2024 VetDiagnosys AI Engine. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    
+    <style>
+        /* Animasi Kustom */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+
+        /* --- STYLING KHUSUS HASIL DIAGNOSA (Supaya Rapi & Berjarak) --- */
+        
+        /* 1. Judul Bagian (Heading 2) */
+        #resultText h2 {
+            color: #064e3b; /* Hijau Tua (Emerald 900) */
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 1.75rem;     /* Jarak atas lebih lega */
+            margin-bottom: 0.75rem;  /* Jarak bawah */
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #a7f3d0; /* Garis bawah hijau muda */
+        }
+        /* Hapus margin atas untuk judul pertama */
+        #resultText h2:first-child {
+            margin-top: 0;
+        }
+
+        /* 2. Paragraf Biasa */
+        #resultText p {
+            margin-bottom: 1rem;
+            line-height: 1.7; /* Jarak antar baris supaya enak dibaca */
+            color: #374151;   /* Abu-abu gelap */
+        }
+
+        /* 3. List / Bullet Points (Kotak Hijau) */
+        #resultText ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: #f0fdf4; /* Background Hijau Pudar */
+            padding: 1.25rem 1.25rem 1.25rem 2.5rem; /* Padding dalam */
+            border-radius: 0.75rem;    /* Sudut membulat */
+            border: 1px solid #d1fae5; /* Border tipis */
+        }
+
+        #resultText li {
+            margin-bottom: 0.75rem; /* Jarak antar poin */
+            padding-left: 0.25rem;
+        }
+
+        /* 4. Teks Tebal (Bold) */
+        #resultText strong {
+            color: #059669; /* Hijau Emerald Medium */
+            font-weight: 800;
+        }
+    </style>
+</body>
+</html>
