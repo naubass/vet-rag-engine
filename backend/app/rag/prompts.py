@@ -2,11 +2,17 @@ from langchain_core.prompts import ChatPromptTemplate
 
 # Prompt Grader (Tetap sama)
 grader_prompt = ChatPromptTemplate.from_template(
-    """Anda adalah sistem validasi medis.
+    """Anda adalah penilai relevansi dokumen medis hewan.
+    
     Dokumen: {document}
-    Pertanyaan: {question}
-    Apakah dokumen ini memuat informasi penyakit atau gejala yang relevan? 
-    Jawab 'yes' atau 'no'."""
+    Pertanyaan User: {question}
+    
+    Tugas:
+    Nilai apakah dokumen tersebut mengandung informasi yang BERKAITAN dengan gejala user.
+    PENTING: Pahami sinonim medis. 
+    Contoh: Jika user tanya "susah pipis" dan dokumen membahas "FLUTD" atau "Obstruksi", itu RELEVAN.
+    
+    Jawab hanya dengan 'yes' atau 'no'."""
 )
 
 # Prompt Diagnosa (DIPERBARUI MENJADI LEBIH SPESIFIK)
