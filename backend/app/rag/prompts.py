@@ -1,6 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-# Prompt Grader (Tetap sama)
+# Prompt Grader
 grader_prompt = ChatPromptTemplate.from_template(
     """Anda adalah penilai relevansi dokumen medis hewan.
     
@@ -15,7 +15,7 @@ grader_prompt = ChatPromptTemplate.from_template(
     Jawab hanya dengan 'yes' atau 'no'."""
 )
 
-# Prompt Diagnosa (DIPERBARUI MENJADI LEBIH SPESIFIK)
+# Prompt Diagnosa
 diagnosis_prompt = ChatPromptTemplate.from_template(
     """Anda adalah Asisten Pakar Veteriner (Vet Expert System). 
     
