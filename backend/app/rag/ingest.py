@@ -21,7 +21,7 @@ def ingest_docs():
     splits = text_splitter.split_documents(docs)
     print(f"Loaded {len(splits)} documents chunks.")
 
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    embeddings = HuggingFaceEmbeddings(model_name="Qwen/Qwen3-Embedding-0.6B")
 
     print("Creating FAISS index...")
     vectorstore = FAISS.from_documents(splits, embeddings)
