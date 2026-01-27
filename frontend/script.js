@@ -39,7 +39,7 @@ function removeImage() {
 
 // --- 3. Fungsi Utama: Kirim Data ke Backend ---
 async function analyzeSymptoms() {
-    const symptoms = document.getElementById('symptomsInput').value;
+    let symptoms = document.getElementById('symptomsInput').value;
     const fileInput = document.getElementById('imageInput');
     
     // UI Elements
@@ -51,9 +51,8 @@ async function analyzeSymptoms() {
     const resultText = document.getElementById('resultText');
 
     // Validasi Sederhana: Harus ada Teks ATAU Gambar
-    if (!symptoms.trim() && fileInput.files.length === 0) {
-        alert("Mohon isi deskripsi gejala atau upload foto klinis hewan terlebih dahulu.");
-        return;
+    if (!symptoms.trim() && fileInput.files.length > 0) {
+        symptoms = "Analisa kelainan pada foto ini. Berikan diagnosa suspect dan PROTOKOL PENGOBATAN TERAPI PILIHAN UTAMA (Lini Pertama) sesuai update jurnal terbaru. Hindari obat lama yang berisiko jika ada alternatif lebih aman.";
     }
 
     // --- UI: Set Loading State ---
