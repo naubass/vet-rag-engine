@@ -1,6 +1,7 @@
-from typing import List, TypedDict
+from typing import List, TypedDict, Any
 
 class GraphState(TypedDict):
     question: str
     generation: str
-    documents: List[str] 
+    documents: List[Any] 
+    image_path: str
