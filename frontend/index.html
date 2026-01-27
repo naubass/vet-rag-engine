@@ -85,17 +85,35 @@
         <div class="max-w-4xl mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-vet-dark mb-4">AI Symptom Checker 🐾</h2>
-                <p class="text-gray-600">Ceritakan gejala yang dialami hewan Anda, AI kami akan mencocokkannya dengan database medis.</p>
+                <p class="text-gray-600">Ceritakan gejala atau upload foto klinis hewan Anda.</p>
             </div>
 
             <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden relative">
                 <div class="p-8">
                     <label class="block text-sm font-bold text-gray-700 mb-2">Anamnesa / Deskripsi Gejala</label>
                     <textarea id="symptomsInput" rows="4" 
-                        class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-vet-primary focus:border-vet-primary transition resize-none text-gray-700 text-lg" 
-                        placeholder="Contoh: Kucing saya muntah cairan kuning, tidak mau makan 2 hari, dan terlihat sangat lemas..."></textarea>
+                        class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-vet-primary focus:border-vet-primary transition resize-none text-gray-700 text-lg mb-4" 
+                        placeholder="Contoh: Mata kucing saya bengkak sebelah kiri dan berair..."></textarea>
                     
-                    <div class="mt-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Upload Foto Klinis (Opsional)</label>
+                    <div class="flex items-center gap-4 mb-6">
+                        <label for="imageInput" class="cursor-pointer bg-emerald-50 text-vet-dark hover:bg-emerald-100 border border-emerald-200 px-4 py-3 rounded-xl flex items-center gap-2 transition font-medium">
+                            <i class="fa-solid fa-camera text-vet-primary"></i>
+                            <span>Pilih Foto</span>
+                            <input type="file" id="imageInput" accept="image/*" class="hidden" onchange="previewImage(event)">
+                        </label>
+                        
+                        <span id="fileName" class="text-gray-500 text-sm italic">Belum ada foto dipilih</span>
+                    </div>
+
+                    <div id="imagePreviewContainer" class="hidden mb-6 relative w-full max-w-xs">
+                        <img id="imagePreview" src="" alt="Preview" class="rounded-xl border-2 border-vet-primary/30 shadow-sm w-full object-cover max-h-48">
+                        <button onclick="removeImage()" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 shadow-md">
+                            <i class="fa-solid fa-times text-xs"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-2">
                         <button onclick="analyzeSymptoms()" id="btnAnalyze"
                             class="w-full bg-vet-dark hover:bg-emerald-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-3 text-lg group">
                             <span id="btnText">Analisa Kasus</span>
