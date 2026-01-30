@@ -5,7 +5,7 @@ from app.core.config import settings
 
 def get_retriever():
     """Load FAISS index dan kembalikan sebagai retriever"""
-    embeddings = HuggingFaceEmbeddings(model_name="Qwen/Qwen3-Embedding-0.6B")
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
 
     if not os.path.exists(settings.FAISS_INDEX_PATH):
         raise Exception("FAISS index not found. Run 'python ingest.py' first.")
@@ -16,4 +16,4 @@ def get_retriever():
         allow_dangerous_deserialization=True
     )
 
-    return vectorstore.as_retriever(search_kwargs={"k": 3})
+    return vectorstore.as_retriever(search_kwargs={"k": 7})
